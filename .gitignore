@@ -1,0 +1,17 @@
+/build/*
+/cache/*
+/dist/*
+/logs/*
+Thumbs.db
+*~
+*.lock
+*.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+.*.sw[a-z]
+*.swp
+*.out
+*.class
+*.py[co]
+*.egg-info
