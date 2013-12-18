@@ -1,6 +1,6 @@
 import os
 from setuptools import setup
-from imsto import __version__, __author__, __author_email__
+from imsto_client import __version__, __author__, __author_email__
 
 # Utility function to read the README file.
 # Used for the long_description.  It's nice, because now 1) we have a top level
@@ -37,7 +37,7 @@ setup(
 	keywords = "imsto image storage",
 	url = "http://github.com/liut/imsto",
 	packages=['imsto_client', 'imsto_client.django'],
-	install_requires = ['pymongo>=2.5'],
+	# install_requires = ['pymongo>=2.5'],
 	long_description = read('README.md'),
     classifiers = CLASSIFIERS,
 )
