@@ -9,7 +9,7 @@ import time
 from _util import encode_upload
 
 __all__ = [
-	'ImstoClient', 
+	'ImstoClient',
 ]
 
 TOKEN_TIMEOUT = 15
@@ -34,7 +34,7 @@ class ImstoClient(object):
 		else:
 			resp, content = h.request(url, method)
 
-		# print 'resp: %s' % resp
+		print 'resp: %s' % resp
 		# print 'body: %s' % content
 		try:
 			if resp.status >= 400:
@@ -47,7 +47,7 @@ class ImstoClient(object):
 			return resp['content-type'], int(resp['content-length']), content
 		except Exception, e:
 			print e
-			print resp
+			# print resp
 			return resp.status, e, None
 
 	def _url(self, node = ''):
@@ -78,7 +78,7 @@ class ImstoClient(object):
 	@property
 	def uid(self):
 		return self._uid
-	
+
 	@uid.setter
 	def uid(self, value):
 		self._uid = str(value)
@@ -108,13 +108,17 @@ class ImstoClient(object):
 		headers = { 'Content-Type': content_type }
 		first, second, res = self._request(self._url(), 'POST', body=body, headers=headers)
 		# print type(res)
-		# print res
+		print res
 		if isinstance(res, dict):
 			ret = res['status'] == 'ok'
 			item = res['data'][0]
+			if item.has_key('error'):
+				raise Exception(item['error'])
+				# return False, item['error']
 			return ret, item['id'], item['path']
 
 		print 'resp: %s, %s' % (first, second)
+		return False, '', ''
 
 
 

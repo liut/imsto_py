@@ -13,6 +13,19 @@ def load_imsto():
 	client = ImstoClient(host, roof)
 	return client
 
+def imsto_url(name, size='orig', base_url = ""):
+	"""Returns an absolute URL where the file's contents can be accessed
+	directly by a web browser.
+	"""
+	if len(name) > MIN_PATH_LEN and name[2] == name[5] == '/':
+
+		url_prefix = settings.IMSTO_URL_PREFIX
+		thumb_path = settings.IMSTO_THUMB_PATH
+		return '{}/{}/{}/{}'.format(url_prefix.rstrip('/'), thumb_path.strip('/'), size, name)
+
+	return urljoin(base_url, name).replace('\\', '/')
+
+
 class ImageStorage(Storage):
 	"""A custom storage backend to store files in GridFS
 
@@ -57,13 +70,7 @@ class ImageStorage(Storage):
 		"""Returns an absolute URL where the file's contents can be accessed
 		directly by a web browser.
 		"""
-		if len(name) > MIN_PATH_LEN and name[2] == name[5] == '/':
-
-			url_prefix = settings.IMSTO_URL_PREFIX
-			thumb_path = settings.IMSTO_THUMB_PATH
-			return '{}/{}/{}/{}'.format(url_prefix.rstrip('/'), thumb_path.strip('/'), size, name)
-
-		return urljoin(self.base_url, name).replace('\\', '/')
+		return imsto_url(name, size, self.base_url)
 
 	def _open(self, name, mode='rb'):
 		pass
@@ -79,6 +86,7 @@ class ImageStorage(Storage):
 	def _save(self, name, content):
 		print 'available name: %s' % name
 		print 'type of content: %s' % type(content)
+		print 'type of content.file: %s' % type(content.file)
 		if hasattr(content, 'temporary_file_path'):
 			file = content.temporary_file_path()
 			print 'temp file: %s' % file

@@ -1,3 +1,5 @@
+#!env python
+
 import os
 from setuptools import setup
 from imsto_client import __version__, __author__, __author_email__
