@@ -21,7 +21,7 @@ def imsto_url(name, size='orig', base_url = ""):
 
 		url_prefix = settings.IMSTO_URL_PREFIX
 		thumb_path = settings.IMSTO_THUMB_PATH
-		return urljoin(base_url.replace('\\', '/'), '{}/{}/{}/{}'.format(url_prefix.rstrip('/'), thumb_path.strip('/'), size, name))
+		return '{}/{}/{}/{}'.format(url_prefix.rstrip('/'), thumb_path.strip('/'), size, name)
 
 	return urljoin(base_url, name).replace('\\', '/')
 
