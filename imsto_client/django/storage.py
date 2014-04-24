@@ -17,6 +17,10 @@ def imsto_url(name, size='orig', base_url = ""):
 	"""Returns an absolute URL where the file's contents can be accessed
 	directly by a web browser.
 	"""
+
+	if name is None or name == '':
+		return ''
+
 	if len(name) > MIN_PATH_LEN and name[2] == name[5] == '/':
 
 		url_prefix = settings.IMSTO_URL_PREFIX
